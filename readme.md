@@ -1,0 +1,11 @@
+# API
+ - `notable`
+    - `setup`: runs a setup wizard that initializes config
+    - `version`: prints version
+    - `config`
+        - `set`: set a config value
+        - `list`: list all config values
+        - `remove`: removed value, sets to default
+    - `search`: searches notes
+    - `take`: takes a note and saves it
+    - `share`: shares the note via email to a distribution list
