@@ -1,10 +1,7 @@
 package cmd
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
 	"time"
 
 	"example.com/noteable/internal"
@@ -18,14 +15,14 @@ var takeCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		today := time.Now()
-		fmt.Printf("Note for %s:\n", today.Format("Mon 2 Jan 2006"))
-		scanner := bufio.NewScanner(os.Stdin)
-		scanner.Scan()
-		noteContent := scanner.Text()
-		strings.Replace(noteContent, "\n", "", -1)
-		strings.Replace(noteContent, "\r", "", -1)
-		note := internal.Note{Content: noteContent}
-		note.Save()
+		inputPrompt := fmt.Sprintf("Note for %s:", today.Format("Mon 2 Jan 2006"))
+		noteContent := internal.TakeInput(inputPrompt)
+		if noteContent == "" {
+			fmt.Println("No note given - nothing saved.")
+		} else {
+			note := internal.Note{Content: noteContent}
+			note.Save()
+		}
 	},
 }
 

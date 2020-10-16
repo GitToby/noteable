@@ -2,10 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 
 	"example.com/noteable/internal"
-
 	"github.com/spf13/cobra"
 )
 
@@ -13,16 +11,15 @@ import (
 var searchCmd = &cobra.Command{
 	Use:   "search",
 	Short: "Search all your notes for a string",
-	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		queryString := strings.Join(args, " ")
+		queryString := internal.TakeInput("Search query:")
 		notes := internal.SearchNotes(queryString, 10)
 		if len(notes) > 0 {
 			for _, note := range notes {
 				fmt.Println(note.CreatedAt.Format("Mon 02 Jan 2006 15:04:05"), "-", note.Content)
 			}
 		} else {
-			fmt.Println("No results!")
+			fmt.Printf("No results for search \"%s\"", queryString)
 		}
 	},
 }
