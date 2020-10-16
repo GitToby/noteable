@@ -1,7 +1,9 @@
 package internal
 
 import (
+	"github.com/spf13/viper"
 	"time"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -35,7 +37,7 @@ func SearchNotes(term string, limit int) []Note {
 }
 
 func getDB() *gorm.DB {
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(viper.GetString("database_path")), &gorm.Config{})
 	db.AutoMigrate(&Note{})
 
 	if err == nil {
