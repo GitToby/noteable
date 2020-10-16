@@ -13,7 +13,7 @@ type Note struct {
 	Content string
 }
 
-// Save saves the note to the database
+// Save the given note to the database
 func (n *Note) Save() {
 	db := getDB()
 	db.Create(n)
@@ -24,6 +24,14 @@ func GetNotesSince(date time.Time) []Note {
 	db := getDB()
 	notes := []Note{}
 	db.Where("created_at >= ?", date).Find(&notes)
+	return notes
+}
+
+// SearchNotes searches the body of all notes
+func SearchNotes(term string, limit int) []Note {
+	db := getDB()
+	notes := []Note{}
+	db.Where("content LIKE ?", "%"+term+"%").Limit(limit).Find(&notes)
 	return notes
 }
 

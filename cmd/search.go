@@ -2,6 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
+
+	"example.com/noteable/internal"
 
 	"github.com/spf13/cobra"
 )
@@ -9,15 +12,18 @@ import (
 // searchCmd represents the search command
 var searchCmd = &cobra.Command{
 	Use:   "search",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Search all your notes for a string",
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("search called")
+		queryString := strings.Join(args, " ")
+		notes := internal.SearchNotes(queryString, 10)
+		if len(notes) > 0 {
+			for _, note := range notes {
+				fmt.Println(note.CreatedAt.Format("Mon 02 Jan 2006 15:04:05"), "-", note.Content)
+			}
+		} else {
+			fmt.Println("No results!")
+		}
 	},
 }
 
