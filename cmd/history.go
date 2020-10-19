@@ -6,11 +6,10 @@ import (
 
 	"example.com/noteable/internal"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
-// defalt to look back 7 days worth of history
 var daysToLookBack int
-
 // historyCmd represents the history command
 var historyCmd = &cobra.Command{
 	Use:   "history",
@@ -20,7 +19,7 @@ var historyCmd = &cobra.Command{
 		notes := internal.GetNotesSince(now.AddDate(0, 0, -1*daysToLookBack))
 		if len(notes) > 0 {
 			for _, note := range notes {
-				fmt.Println(note.CreatedAt.Format("Mon 02 Jan 2006 15:04:05"), "-", note.Content)
+				fmt.Println(note.CreatedAt.Format(viper.GetString("date_format")), "-", note.Content)
 			}
 		} else {
 			fmt.Println("Looks like you have no notes, make some using \"noteable take\"")

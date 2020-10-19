@@ -3,7 +3,10 @@ package internal
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 )
 
@@ -22,4 +25,24 @@ func TakeInput(prompts ...string) string {
 	strings.Replace(userInput, "\r", "", -1)
 
 	return userInput
+}
+
+// OpenBrowser opens the browser of the given system
+func OpenBrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }

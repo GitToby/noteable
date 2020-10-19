@@ -2,9 +2,9 @@ package cmd
 
 import (
 	"fmt"
-
 	"github.com/spf13/viper"
-
+"sort"
+	"github.com/jedib0t/go-pretty/table"
 	"github.com/spf13/cobra"
 )
 
@@ -12,18 +12,16 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("\nUsing config file:", viper.ConfigFileUsed())
-		for _, key := range viper.AllKeys() {
-			fmt.Printf("%s: %s", key, viper.Get(key))
+		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		t := table.NewWriter()
+		t.AppendHeader(table.Row{"Key", "Value"})
+		keys := viper.AllKeys()
+		sort.Strings(keys)
+		for _, key := range keys {
+			t.AppendRow(table.Row{key, viper.Get(key)})
 		}
-		fmt.Println()
+		fmt.Println(t.Render())
 	},
 }
 

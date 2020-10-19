@@ -1,8 +1,9 @@
 package internal
 
 import (
-	"github.com/spf13/viper"
 	"time"
+
+	"github.com/spf13/viper"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -32,6 +33,7 @@ func GetNotesSince(date time.Time) []Note {
 func SearchNotes(term string, limit int) []Note {
 	db := getDB()
 	notes := []Note{}
+	// search for all notes containing the search term
 	db.Where("content LIKE ?", "%"+term+"%").Limit(limit).Find(&notes)
 	return notes
 }
