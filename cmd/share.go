@@ -47,7 +47,7 @@ to quickly create a Cobra application.`,
 		subject := viper.GetString("share.email.subject")
 		body := fmt.Sprintf("Notes since %s:\n\n", firstNoteDate)
 
-		dateFmt := viper.GetString("date_format")
+		dateFmt := viper.GetString("share.date_format")
 		for _, note := range includedNotes {
 			body += fmt.Sprintf("%s: %s\n", note.CreatedAt.Format(dateFmt), note.Content)
 		}
