@@ -52,7 +52,7 @@ to quickly create a Cobra application.`,
 			body += fmt.Sprintf("%s: %s\n", note.CreatedAt.Format(dateFmt), note.Content)
 		}
 
-		mailURL := fmt.Sprintf("mailto:?to=%s&cc=%s&subject=%s&body=%s", emailList, ccList, subject, url.QueryEscape(body))
+		mailURL := fmt.Sprintf("mailto:?to=%s&cc=%s&subject=%s&body=%s", emailList, ccList, url.QueryEscape(subject), url.QueryEscape(body))
 		println(mailURL)
 		internal.OpenBrowser(mailURL)
 	},
