@@ -1,30 +1,24 @@
 package internal
 
 import (
-	"bufio"
 	"fmt"
+	"github.com/manifoldco/promptui"
 	"log"
-	"os"
 	"os/exec"
 	"runtime"
-	"strings"
 )
 
 // TakeInput from the cli with a set of prompts
-func TakeInput(prompts ...string) string {
-	for _, prompt := range prompts {
-		fmt.Println(prompt)
+func TakeInput(promptLabel string, isConfirm bool) string {
+	res := promptui.Prompt{
+		Label:     promptLabel,
+		IsConfirm: isConfirm,
 	}
-
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	userInput := scanner.Text()
-
-	// replace newline chars for all systems
-	strings.Replace(userInput, "\n", "", -1)
-	strings.Replace(userInput, "\r", "", -1)
-
-	return userInput
+	result, err := res.Run()
+	if err != nil {
+		return ""
+	}
+	return result
 }
 
 // OpenBrowser opens the browser of the given system

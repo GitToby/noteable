@@ -17,7 +17,10 @@ var searchCmd = &cobra.Command{
 	Aliases: []string{"s"},
 	Run: func(cmd *cobra.Command, args []string) {
 		if queryString == "" {
-			queryString = internal.TakeInput("Search query:")
+			queryString = internal.TakeInput("Search query", false)
+		}
+		if queryString == "" {
+			fmt.Println("No search param given. To retrieve all notes pass flag --all")
 		}
 		notes := internal.SearchNotes(queryString, 10)
 		if len(notes) > 0 {

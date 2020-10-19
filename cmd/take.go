@@ -6,6 +6,8 @@ import (
 
 	"example.com/noteable/internal"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	// "github.com/spf13/viper"
 )
 
 var noteContent string
@@ -18,18 +20,27 @@ var takeCmd = &cobra.Command{
 	Args:    cobra.NoArgs,
 	Run: func(cmd *cobra.Command, args []string) {
 		today := time.Now()
-		if noteContent == "" {
-			inputPrompt := fmt.Sprintf("Note for %s:", today.Format("Mon 2 Jan 2006"))
-			noteContent = internal.TakeInput(inputPrompt)
+		force := noteContent != "" // if a param is passed in, force no input
+		if !force {
+			inputPrompt := fmt.Sprintf("Note for %s", today.Format("Mon 2 Jan 2006"))
+			noteContent = internal.TakeInput(inputPrompt, false)
 		}
+
 		if noteContent == "" {
-			fmt.Println("No note given - nothing saved.")
-		} else {
-			note := internal.Note{Content: noteContent}
-			note.Save()
+			fmt.Println("Cancelled - nothing saved.")
+			return
 		}
-		if today.Weekday() == 5 {
-			shareCmd.Run(cmd, args)
+
+		note := internal.Note{Content: noteContent}
+		note.Save()
+		fmt.Println("Saved.")
+		shareDay := viper.Get("share.schedule")
+		if int(today.Weekday()) == shareDay {
+			if force {
+				shareCmd.Run(cmd, args)
+			} else if share := internal.TakeInput("Today is a share day, share with audience", true); share == "y" {
+				shareCmd.Run(cmd, args)
+			}
 		}
 	},
 }

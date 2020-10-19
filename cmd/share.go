@@ -40,7 +40,7 @@ to quickly create a Cobra application.`,
 
 		emailList := strings.Join(viper.GetStringSlice("share.email.to"), ";")
 		if emailList == "" {
-			fmt.Println("No emails to send to, canceling share")
+			fmt.Println("No emails to send to, canceling share. Add email in the config file.")
 			return
 		}
 		ccList := strings.Join(viper.GetStringSlice("share.email.cc"), ";")
