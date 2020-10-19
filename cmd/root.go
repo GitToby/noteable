@@ -12,7 +12,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "noteable",
 	Version: "v0.1.0",
-	Short:   "Take, manage and share notes powerfully.",
+	Short:   "Take, manage and share notes powerfully via cli.",
 	Long:    "",
 }
 
