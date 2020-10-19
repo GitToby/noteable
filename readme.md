@@ -4,27 +4,6 @@ noteable is a cli note tool which you can set up to take notes and share via ema
 A help description is available via `notable --help`
 
 ```
-Take, manage and share notes powerfully.
-
-Usage:
-  noteable [command]
-
-Available Commands:
-  config      Set and retrieve config for notable
-  help        Help about any command
-  history     Get the history of notes you've taken
-  search      Search all your notes for a string
-  share       A brief description of your command
-  take        Take a note and save it
-
-Flags:
-      --config string   config file path to use (default "C:\\Users\\Toby\\.noteable\\config.yml")
-  -h, --help            help for noteable
-  -v, --version         version for noteable
-
-Use "noteable [command] --help" for more information about a command.
-
-C:\dev\projects\noteable>noteable --help
 Take, manage and share notes powerfully via cli.
 
 Usage:
