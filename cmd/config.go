@@ -21,7 +21,7 @@ const defaultConfDirName string = ".noteable"
 // configCmd represents the config command
 var configCmd = &cobra.Command{
 	Use:   "config",
-	Short: "Set and retrieve config for notable",
+	Short: "List and reset config for notable",
 }
 
 func init() {
