@@ -59,7 +59,7 @@ func initConfig() {
 	viper.SetDefault("date_format", "Mon 02 Jan 2006 15:04:05")
 	viper.SetDefault("share.methods", []string{"email"})
 	viper.SetDefault("share.schedule", []int{5})
-	viper.SetDefault("share.date_format", "Mon 02 Jan 03:04PM")
+	viper.SetDefault("share.date_format", "Mon 02 Jan 03:04 pm")
 	viper.SetDefault("share.email.to", []string{""})
 	viper.SetDefault("share.email.cc", []string{""})
 	viper.SetDefault("share.email.subject", "Notes from noteable!")
