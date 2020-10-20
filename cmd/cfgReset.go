@@ -19,8 +19,8 @@ var resetCmd = &cobra.Command{
 	ValidArgs: viper.AllKeys(),
 	Run: func(cmd *cobra.Command, args []string) {
 		if !force {
-			res := internal.TakeInput("Are you sure", true)
-			if res == "n" {
+			res := internal.TakeInput("Are you sure?", true)
+			if res != "y" {
 				return
 			}
 		}

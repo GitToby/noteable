@@ -22,7 +22,7 @@ var takeCmd = &cobra.Command{
 		today := time.Now()
 		force := noteContent != "" // if a param is passed in, force no input
 		if !force {
-			inputPrompt := fmt.Sprintf("Note for %s", today.Format("Mon 2 Jan 2006"))
+			inputPrompt := fmt.Sprintf("Note for %s:", today.Format("Mon 2 Jan 2006"))
 			noteContent = internal.TakeInput(inputPrompt, false)
 		}
 
@@ -38,7 +38,7 @@ var takeCmd = &cobra.Command{
 		if int(today.Weekday()) == shareDay {
 			if force {
 				shareCmd.Run(cmd, args)
-			} else if share := internal.TakeInput("Today is a share day, share with audience", true); share == "y" {
+			} else if share := internal.TakeInput("Today is a share day, share with audience?", true); share == "y" {
 				shareCmd.Run(cmd, args)
 			}
 		}

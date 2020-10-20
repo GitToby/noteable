@@ -9,6 +9,8 @@ import (
 )
 
 var queryString string
+var all bool
+var limit int
 
 // searchCmd represents the search command
 var searchCmd = &cobra.Command{
@@ -17,12 +19,12 @@ var searchCmd = &cobra.Command{
 	Aliases: []string{"s"},
 	Run: func(cmd *cobra.Command, args []string) {
 		if queryString == "" {
-			queryString = internal.TakeInput("Search query", false)
+			queryString = internal.TakeInput("Search query:", false)
 		}
-		if queryString == "" {
+		if queryString == "" && !all {
 			fmt.Println("No search param given. To retrieve all notes pass flag --all")
 		}
-		notes := internal.SearchNotes(queryString, 10)
+		notes := internal.SearchNotes(queryString, limit)
 		if len(notes) > 0 {
 			for _, note := range notes {
 				fmt.Println(note.CreatedAt.Format(viper.GetString("date_format")), "-", note.Content)
@@ -36,4 +38,6 @@ var searchCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(searchCmd)
 	searchCmd.Flags().StringVarP(&queryString, "phrase", "p", "", "Pass the search phrase directly to the command line rather than interactively")
+	searchCmd.Flags().BoolVarP(&all, "all", "a", false, "Return all notes")
+	searchCmd.Flags().IntVarP(&limit, "limit", "l", 10, "The max number of notes to return")
 }
