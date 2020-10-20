@@ -11,7 +11,7 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "noteable",
-	Version: "v0.1.1",
+	Version: "v0.1.2",
 	Short:   "Take, manage and share notes powerfully via cli.",
 	Long:    "",
 }
